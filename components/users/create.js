@@ -1,6 +1,6 @@
 var async = require('async');
 var upload = require('app-util').upload;
-var customers = require('app-payment').customers;
+// var customers = require('app-payment').customers;
 
 /**
  * Model
@@ -59,7 +59,7 @@ function saveAccount(req, account, callback) {
 var create = function onCreate(req, res, next) {
 	async.waterfall([
 		async.apply(findUserAccount, req),
-		createCustomerAccount,
+		// createCustomerAccount,
 		uploadImage,
 		saveAccount
 	], function onComplete(err, results) {
