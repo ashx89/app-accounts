@@ -9,7 +9,8 @@
   "author": "Ashley J. Taylor",
   "license": "ISC",
   "dependencies": {
-    "app-util": "git+https://github.com/ashx89/app-util.git#master",
+    "app-util": "git+https://github.com/ashx89/app-util.git",
+    "app-payment": "git+https://github.com/ashx89/app-payment.git",
     "async": "^2.0.0",
     "mongoose": "^4.5.4",
     "mongoose-validators": "^0.1.0",
