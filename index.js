@@ -16,5 +16,5 @@ app.patch('/accounts', uploadImage, require('./components/users/update'));
 
 module.exports = {
 	app: app,
-	model: require('mongoose').model('Account')
+	model: require('./models/account')
 };
