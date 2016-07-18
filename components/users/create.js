@@ -18,15 +18,15 @@ function findUserAccount(req, callback) {
 	});
 }
 
-function createCustomerAccount(req, account, callback) {
-	customers.create(req.user, function onCustomerCreate(err, customer) {
-		if (err) return callback(err);
+// function createCustomerAccount(req, account, callback) {
+// 	customers.create(req.user, function onCustomerCreate(err, customer) {
+// 		if (err) return callback(err);
 
-		account.customer_id = customer.id;
+// 		account.customer_id = customer.id;
 
-		return callback(null, req, account);
-	});
-}
+// 		return callback(null, req, account);
+// 	});
+// }
 
 function uploadImage(req, account, callback) {
 	if (!req.file) return callback(null, req, account);
