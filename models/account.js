@@ -68,7 +68,7 @@ var accountSchema = new mongoose.Schema({
 		},
 		country_code: {
 			type: String
-		},
+		}
 	},
 	currency: String
 }, {
@@ -88,12 +88,11 @@ accountSchema.virtual('fulladdress').get(function onGetFullAddress() {
 
 accountSchema.pre('save', function onModelSave(next) {
 	var account = this;
-
 	// Set delivery radius. (miles * meteres in miles). Geocoder uses meteres
-	account.delivery.radius = parseInt(account.delivery.radius, 10) * METERS_IN_MILES;
+	// account.delivery.radius = parseInt(account.delivery.radius, 10) * METERS_IN_MILES;
 
-	if (account.delivery.is_free === true) account.delivery.free_over = undefined;
-	if (account.delivery.cost === 0) account.delivery.free_over = undefined;
+	// if (account.delivery.is_free === true) account.delivery.free_over = undefined;
+	// if (account.delivery.cost === 0) account.delivery.free_over = undefined;
 
 	geocoder.geocode(account.fulladdress, function onGeocode(err, res) {
 		if (err) return next(err);
