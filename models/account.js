@@ -70,41 +70,7 @@ var accountSchema = new mongoose.Schema({
 			type: String
 		},
 	},
-	cooking_days: Array,
-
-	excluded_days: Array,
-
-	currency: String,
-
-	costs_tier: [{
-		price: {
-			type: Number,
-			validate: [validator.isNumeric, 'Invalid Price']
-		},
-		days: {
-			type: Number,
-			validate: [validator.isNumeric, 'Invalid Number of Days']
-		},
-		meals: {
-			type: Number,
-			validate: [validator.isNumeric, 'Invalid Meals per Day']
-		}
-	}],
-	delivery: {
-		radius: {
-			type: Number,
-		},
-		is_free: {
-			type: Boolean,
-			default: true
-		},
-		cost: {
-			type: Number
-		},
-		free_over: {
-			type: Number
-		}
-	}
+	currency: String
 }, {
 	minimize: true,
 	timestamps: true
@@ -118,13 +84,6 @@ accountSchema.virtual('fulladdress').get(function onGetFullAddress() {
 			this.address.line2 + ', ' +
 			this.address.city + ', ' +
 			this.address.zipcode;
-});
-
-/**
- * Get the full address
- */
-accountSchema.virtual('minimum_order').get(function onGetMinimumOrder() {
-	return { price: this.costs_tier[0].price, days: this.costs_tier[0].days };
 });
 
 accountSchema.pre('save', function onModelSave(next) {
