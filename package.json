@@ -11,7 +11,6 @@
   "dependencies": {
     "app-util": "git+https://github.com/ashx89/app-util.git",
     "async": "^2.0.0",
-    "mongoose": "^4.5.4",
     "mongoose-validators": "^0.1.0",
     "multer": "^1.1.0",
     "node-geocoder": "^3.13.0",
