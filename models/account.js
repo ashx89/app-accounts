@@ -7,7 +7,7 @@ var METERS_IN_MILES = 1609.34;
 /**
  * Postcode max length 9. e.g. AB12 34CD
  */
-function validPostcodeLength(value) {
+function validZipcodeLength(value) {
 	return value && value.length <= 9;
 }
 
@@ -40,19 +40,23 @@ var accountSchema = new mongoose.Schema({
 	},
 
 	address: {
-		address_line: {
+		line1: {
 			type: String,
-			validate: [validator.isAlphanumeric, 'Invalid Address Line']
+			validate: [validator.isAlphanumeric, 'Invalid Address Line 1']
+		},
+		line2: {
+			type: String,
+			validate: [validator.isAlphanumeric, 'Invalid Address Line 2']
 		},
 		city: {
 			type: String,
 			validate: [validator.isAlpha, 'Invalid City']
 		},
-		postcode: {
+		zipcode: {
 			type: String,
 			validate: [
-				{ validator: validator.isAlphanumeric, message: 'Invalid Postcode' },
-				{ validator: validPostcodeLength, message: 'Invalid Postcode' }
+				{ validator: validator.isAlphanumeric, message: 'Invalid Zipcode' },
+				{ validator: validZipcodeLength, message: 'Invalid Zipcode' }
 			]
 		},
 		location: {
@@ -110,7 +114,10 @@ var accountSchema = new mongoose.Schema({
  * Get the full address
  */
 accountSchema.virtual('fulladdress').get(function onGetFullAddress() {
-	return this.address.address_line + ', ' + this.address.city + ', ' + this.address.postcode;
+	return this.address.line1 + ', ' +
+			this.address.line2 + ', ' +
+			this.address.city + ', ' +
+			this.address.zipcode;
 });
 
 /**
@@ -131,6 +138,8 @@ accountSchema.pre('save', function onModelSave(next) {
 
 	geocoder.geocode(account.fulladdress, function onGeocode(err, res) {
 		if (err) return next(err);
+		if (!res.length) return next(new Error('Could not find the address entered'));
+
 		account.address.location = [res[0].latitude, res[0].longitude];
 		account.address.country = res[0].country;
 		account.address.country_code = res[0].countryCode;
