@@ -1,6 +1,5 @@
 var async = require('async');
 var upload = require('app-util').upload;
-// var customers = require('app-payment').customers;
 
 /**
  * Model
@@ -17,16 +16,6 @@ function findUserAccount(req, callback) {
 		return callback(null, req, account);
 	});
 }
-
-// function createCustomerAccount(req, account, callback) {
-// 	customers.create(req.user, function onCustomerCreate(err, customer) {
-// 		if (err) return callback(err);
-
-// 		account.customer_id = customer.id;
-
-// 		return callback(null, req, account);
-// 	});
-// }
 
 function uploadImage(req, account, callback) {
 	if (!req.file) return callback(null, req, account);
