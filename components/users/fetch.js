@@ -32,7 +32,7 @@ var fetch = function onFetch(req, res, next) {
 
 				resultsObject.users.push({ user: user, account: account });
 
-				if (result.docs.length === index + 1) return (resultsObject.users.length === 1) ? res.status(200).json(resultsObject.users[0]) : res.status(200).json(resultsObject.users);
+				if (result.docs.length === index + 1) return res.status(200).json(resultsObject);
 			});
 		});
 	});
