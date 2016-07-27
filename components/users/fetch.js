@@ -18,7 +18,7 @@ var fetch = function onFetch(req, res, next) {
 			if (!users.length) return next(new Error('Users not found'));
 
 			users.forEach(function onEachUser(user) {
-				Account.find({ user: user._id }, function onFind(err, accounts) {
+				Account.find({ user: user._id }, function onFind(err, account) {
 					if (err) return next(err);
 
 					userObject.push({ user: user, account: account });
