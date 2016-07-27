@@ -17,7 +17,6 @@ app.patch('/accounts', uploadImage, require('./components/accounts/update'));
 /**
  * Rest:: Users
  */
-app.get('/users', require('./components/users/fetch'));
 app.get('/users/:id', require('./components/users/fetch'));
 
 module.exports = {
