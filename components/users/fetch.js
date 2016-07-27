@@ -7,7 +7,10 @@ var Account = require(global.__accounts_base + '/models/account');
 var fetch = function onFetch(req, res, next) {
 	var id = req.params.id;
 
-	var usersArray = [];
+	var resultsObject = {
+		users: []
+	};
+
 	var userQuery = (id) ? { _id: id } : {};
 
 	User.paginate(userQuery, {
@@ -16,22 +19,20 @@ var fetch = function onFetch(req, res, next) {
 	}).then(function onPaginate(result) {
 		if (!result.docs.length) return next(new Error('Users not found'));
 
+		resultsObject.pagination = {
+			total: result.total,
+			limit: result.limit,
+			page: result.page,
+			pages: result.pages
+		};
+
 		result.docs.forEach(function onEachUser(user, index) {
 			Account.find({ user: user._id }, function onFind(err, account) {
 				if (err) return next(err);
 
-				usersArray.push({
-					user: user,
-					account: account,
-					pagination: {
-						total: result.total,
-						limit: result.limit,
-						page: result.page,
-						pages: result.pages
-					}
-				});
+				resultsObject.users.push({ user: user, account: account });
 
-				if (result.docs.length === index + 1) return (usersArray.length === 1) ? res.status(200).json(usersArray[0]) : res.status(200).json(usersArray);
+				if (result.docs.length === index + 1) return (resultsObject.users.length === 1) ? res.status(200).json(resultsObject.users[0]) : res.status(200).json(resultsObject.users);
 			});
 		});
 	});
