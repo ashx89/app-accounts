@@ -11,8 +11,8 @@ var fetch = function onFetch(req, res, next) {
 	var userQuery = (id) ? { _id: id } : {};
 
 	User.paginate(userQuery, {
-		page: parseInt(req.query.page, 10),
-		limit: parseInt(req.query.limit, 10)
+		page: parseInt(req.query.page, 10) || 1,
+		limit: parseInt(req.query.limit, 10) || 10
 	}).then(function onPaginate(result) {
 		if (!result.docs.length) return next(new Error('Users not found'));
 
