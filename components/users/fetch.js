@@ -7,25 +7,25 @@ var Account = require(global.__accounts_base + '/models/account');
 var fetch = function onFetch(req, res, next) {
 	var id = req.params.id;
 
-	var userObject = [];
+	var usersArray = [];
 	var userQuery = (id) ? { _id: id } : {};
 
 	User.find(userQuery)
-		.limit(req.query.limit || 10)
+		.limit(parseInt(req.query.limit, 10) || 10)
 		.sort({ lastname: 1 })
 		.exec(function onUsersFind(err, users) {
 			if (err) return next(err);
 			if (!users.length) return next(new Error('Users not found'));
 
-			users.forEach(function onEachUser(user) {
+			users.forEach(function onEachUser(user, index) {
 				Account.find({ user: user._id }, function onFind(err, account) {
 					if (err) return next(err);
 
-					userObject.push({ user: user, account: account });
+					usersArray.push({ meta: user, account: account });
+
+					if (users.length === index + 1) return (usersArray.length === 1) ? res.status(200).json(usersArray[0]) : res.status(200).json(usersArray);
 				});
 			});
-
-			return (userObject.length === 1) ? res.status(200).json(userObject[0]) : res.status(200).json(userObject);
 		});
 };
 
