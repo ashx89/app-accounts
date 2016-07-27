@@ -1,4 +1,4 @@
-var User = require(global.__base + '/manager').userModel;
+var User = require(global.__base + '/manager').UserModel;
 var Account = require(global.__accounts_base + '/models/account');
 
 /**
