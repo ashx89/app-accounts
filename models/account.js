@@ -1,5 +1,6 @@
 var geocoder = require('node-geocoder')('google', 'https');
 var mongoose = require('mongoose');
+var paginate = require('mongoose-paginate');
 var validator = require('mongoose-validators');
 
 var METERS_IN_MILES = 1609.34;
@@ -114,4 +115,15 @@ accountSchema.set('toJSON', {
 	}
 });
 
+/**
+ * Pagination defaults
+ * Add paginate to model
+ */
+paginate.paginate.options = {
+	sort: 'storename',
+	lean: true,
+	limit: 10
+};
+
+accountSchema.plugin(paginate);
 module.exports = mongoose.model('Account', accountSchema);
