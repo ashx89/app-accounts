@@ -18,14 +18,14 @@ var fetch = function onFetch(req, res, next) {
 			if (!users.length) return next(new Error('Users not found'));
 
 			users.forEach(function onEachUser(user) {
-				Account.find({ user: user._id }, function onFind(err, account) {
+				Account.find({ user: user._id }, function onFind(err, accounts) {
 					if (err) return next(err);
 
 					userObject.push({ user: user, account: account });
-
-					return (userObject.length === 1) ? res.status(200).json(userObject[0]) : res.status(200).json(userObject);
 				});
 			});
+
+			return (userObject.length === 1) ? res.status(200).json(userObject[0]) : res.status(200).json(userObject);
 		});
 };
 
