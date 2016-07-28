@@ -61,12 +61,8 @@ var accountSchema = new mongoose.Schema({
 			]
 		},
 		location: {
-			type: {
-				type: String,
-				default: 'Point'
-			},
-			coordinates: [Number],
-			index: '2d'
+			type: [Number],
+			index: '2dsphere'
 		},
 		country: {
 			type: String
@@ -103,7 +99,7 @@ accountSchema.pre('save', function onModelSave(next) {
 		if (err) return next(err);
 		if (!res.length) return next(new Error('Could not find the address entered'));
 
-		account.address.location.coordinates = [res[0].latitude, res[0].longitude];
+		account.address.location = [res[0].latitude, res[0].longitude];
 		account.address.country = res[0].country;
 		account.address.country_code = res[0].countryCode;
 		return next();
