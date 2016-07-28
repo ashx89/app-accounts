@@ -11,6 +11,7 @@ var uploadImage = multer().single('image');
  * Rest:: Account
  */
 app.get('/accounts', require('./components/accounts/fetch'));
+app.get('/accounts/:id', require('./components/accounts/fetch'));
 app.post('/accounts', uploadImage, require('./components/accounts/create'));
 app.patch('/accounts', uploadImage, require('./components/accounts/update'));
 app.get('/accounts/search', require('./components/accounts/search'));
