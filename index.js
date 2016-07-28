@@ -19,7 +19,7 @@ app.get('/accounts/search', require('./components/accounts/search'));
  * Rest:: Users
  */
 app.get('/users/search', require('./components/users/search'));
-app.get('/users/:id', require('./components/users/fetch'));
+// app.get('/users/:id', require('./components/users/fetch'));
 
 
 module.exports = {
