@@ -1,10 +1,9 @@
-/**
- * Search users
- */
+var _ = require('underscore');
+
 var search = function onSearch(req, res, next) {
 	var opts = {
 		req: req,
-		query: {},
+		query: _.extend({}, req.query),
 		model: require(global.__base + '/manager').UserModel,
 		sort: req.query.sort || 'lastname'
 	};
