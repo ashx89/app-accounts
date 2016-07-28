@@ -1,18 +1,11 @@
-var Account = require(global.__accounts_base + '/models/account');
-
 /**
  * Search accounts
  */
 var search = function onSearch(req, res, next) {
 	var opts = {
 		req: req,
-		model: Account,
-		sort: req.query.sort || 'storename',
-		validation: undefined,
-		extend: [{
-			name: 'users',
-			model: require(global.__base + '/manager').UserModel
-		}]
+		model: require(global.__accounts_base + '/models/account'),
+		sort: req.query.sort || 'storename'
 	};
 
 	opts.query = (req.query.lat && req.query.lng && req.query.distance) ? {

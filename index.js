@@ -13,13 +13,14 @@ var uploadImage = multer().single('image');
 app.get('/accounts', require('./components/accounts/fetch'));
 app.post('/accounts', uploadImage, require('./components/accounts/create'));
 app.patch('/accounts', uploadImage, require('./components/accounts/update'));
-
 app.get('/accounts/search', require('./components/accounts/search'));
 
 /**
  * Rest:: Users
  */
+ app.get('/users/search', require('./components/users/search'));
 app.get('/users/:id', require('./components/users/fetch'));
+
 
 module.exports = {
 	app: app,
