@@ -62,7 +62,8 @@ var accountSchema = new mongoose.Schema({
 		},
 		location: {
 			type: [Number],
-			index: '2d'
+			point: '2dsphere',
+			index: true
 		},
 		country: {
 			type: String
