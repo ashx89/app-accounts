@@ -66,7 +66,7 @@ var accountSchema = new mongoose.Schema({
 				default: 'Point'
 			},
 			coordinates: [Number],
-			index: '2dsphere'
+			index: '2d'
 		},
 		country: {
 			type: String
