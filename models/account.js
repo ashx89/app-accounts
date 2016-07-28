@@ -65,7 +65,8 @@ var accountSchema = new mongoose.Schema({
 				type: String,
 				default: 'Point'
 			},
-			coordinates: [Number]
+			coordinates: [Number],
+			index: '2dsphere'
 		},
 		country: {
 			type: String
@@ -79,8 +80,6 @@ var accountSchema = new mongoose.Schema({
 	minimize: true,
 	timestamps: true
 });
-
-accountSchema.index({ location: '2dsphere' });
 
 /**
  * Get the full address
