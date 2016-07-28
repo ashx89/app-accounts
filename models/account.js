@@ -8,7 +8,7 @@ var METERS_IN_MILES = 1609.34;
 /**
  * Postcode max length 9. e.g. AB12 34CD
  */
-function validZipcodeLength(value) {
+function validPostcodeLength(value) {
 	return value && value.length <= 9;
 }
 
@@ -53,11 +53,11 @@ var accountSchema = new mongoose.Schema({
 			type: String,
 			validate: [validator.isAlpha, 'Invalid City']
 		},
-		zipcode: {
+		postcode: {
 			type: String,
 			validate: [
-				{ validator: validator.isAlphanumeric, message: 'Invalid Zipcode' },
-				{ validator: validZipcodeLength, message: 'Invalid Zipcode' }
+				{ validator: validator.isAlphanumeric, message: 'Invalid Postcode' },
+				{ validator: validPostcodeLength, message: 'Invalid Postcode' }
 			]
 		},
 		location: {
@@ -89,7 +89,7 @@ accountSchema.virtual('fulladdress').get(function onGetFullAddress() {
 	return this.address.line1 + ', ' +
 			this.address.line2 + ', ' +
 			this.address.city + ', ' +
-			this.address.zipcode;
+			this.address.postcode;
 });
 
 accountSchema.pre('save', function onModelSave(next) {
