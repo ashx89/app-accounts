@@ -6,6 +6,7 @@ var _ = require('underscore');
 var search = function onSearch(req, res, next) {
 	var opts = {
 		req: req,
+		query: {},
 		model: require(global.__accounts_base + '/models/account'),
 		sort: req.query.sort || 'storename'
 	};
