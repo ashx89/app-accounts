@@ -1,8 +1,5 @@
 var _ = require('underscore');
 
-/**
- * Search accounts
- */
 var search = function onSearch(req, res, next) {
 	var opts = {
 		req: req,

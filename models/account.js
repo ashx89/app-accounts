@@ -71,7 +71,10 @@ var accountSchema = new mongoose.Schema({
 			type: String
 		}
 	},
-	currency: String
+	currency: {
+		type: String,
+		default: 'gbp'
+	}
 }, {
 	minimize: true,
 	timestamps: true
