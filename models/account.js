@@ -81,10 +81,12 @@ var accountSchema = new mongoose.Schema({
  * Get the full address
  */
 accountSchema.virtual('fulladdress').get(function onGetFullAddress() {
-	return this.address.line1 + ', ' +
-			this.address.line2 + ', ' +
-			this.address.city + ', ' +
-			this.address.postcode;
+	if (this.address.line1) {
+		return this.address.line1 + ', ' +
+				this.address.line2 + ', ' +
+				this.address.city + ', ' +
+				this.address.postcode;
+	}
 });
 
 accountSchema.pre('save', function onModelSave(next) {
@@ -95,15 +97,19 @@ accountSchema.pre('save', function onModelSave(next) {
 	// if (account.delivery.is_free === true) account.delivery.free_over = undefined;
 	// if (account.delivery.cost === 0) account.delivery.free_over = undefined;
 
-	geocoder.geocode(account.fulladdress, function onGeocode(err, res) {
-		if (err) return next(err);
-		if (!res.length) return next(new Error('Could not find the address entered'));
+	if (account.fulladdress) {
+		geocoder.geocode(account.fulladdress, function onGeocode(err, res) {
+			if (err) return next(err);
+			if (!res.length) return next(new Error('Could not find the address entered'));
 
-		account.address.location = [res[0].latitude, res[0].longitude];
-		account.address.country = res[0].country;
-		account.address.country_code = res[0].countryCode;
-		return next();
-	});
+			account.address.location = [res[0].latitude, res[0].longitude];
+			account.address.country = res[0].country;
+			account.address.country_code = res[0].countryCode;
+			return next();
+		});
+	}
+
+	return next();
 });
 
 accountSchema.set('toJSON', {
