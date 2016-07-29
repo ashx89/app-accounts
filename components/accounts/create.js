@@ -1,9 +1,6 @@
 var async = require('async');
 var upload = require('app-util').upload;
 
-/**
- * Model
- */
 var Account = require(global.__accounts_base + '/models/account');
 
 function findUserAccount(req, callback) {
@@ -48,7 +45,6 @@ function saveAccount(req, account, callback) {
 var create = function onCreate(req, res, next) {
 	async.waterfall([
 		async.apply(findUserAccount, req),
-		// createCustomerAccount,
 		uploadImage,
 		saveAccount
 	], function onComplete(err, results) {
